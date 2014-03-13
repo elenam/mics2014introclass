@@ -1,0 +1,147 @@
+% This is sigproc-sp.tex -FILE FOR V2.6SP OF ACM_PROC_ARTICLE-SP.CLS
+% OCTOBER 2002
+%
+% It is an example file showing how to use the 'acm_proc_article-sp.cls' V2.6SP
+% LaTeX2e document class file for Conference Proceedings submissions.
+% ----------------------------------------------------------------------------------------------------------------
+% This .tex file (and associated .cls V2.6SP) *DOES NOT* produce:
+%       1) The Permission Statement
+%       2) The Conference (location) Info information
+%       3) The Copyright Line with ACM data
+%       4) Page numbering
+%
+%  However, both the CopyrightYear (default to 2002) and the ACM Copyright Data
+% (default to X-XXXXX-XX-X/XX/XX) can still be over-ridden by whatever the author
+% inserts into the source .tex file.
+% e.g.
+% \CopyrightYear{2003} will cause 2003 to appear in the copyright line.
+% \crdata{0-12345-67-8/90/12} will cause 0-12345-67-8/90/12 to appear in the copyright line.
+%
+% ---------------------------------------------------------------------------------------------------------------
+% It is an example which *does* use the .bib file (from which the .bbl file
+% is produced).
+% REMEMBER HOWEVER: After having produced the .bbl file,
+% and prior to final submission,
+% you need to 'insert'  your .bbl file into your source .tex file so as to provide
+% ONE 'self-contained' source file.
+%
+% Questions regarding SIGS should be sent to
+% Adrienne Griscti ---> griscti@acm.org
+%
+% Questions/suggestions regarding the guidelines, .tex and .cls files, etc. to
+% Gerald Murray ---> murray@acm.org 
+%
+% For tracking purposes - this is V2.6SP - OCTOBER 2002
+
+
+\documentclass[12pt]{article}
+
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\topmargin}{0in}
+\setlength{\headheight}{0in}
+\setlength{\headsep}{0in}
+\setlength{\textwidth}{6in}
+\setlength{\textheight}{9in}
+\setlength{\parindent}{0in} 
+
+\usepackage{graphicx} %For jpg figure inclusion
+\usepackage{times} %For typeface
+\usepackage{epsfig}
+\usepackage{color} %For Comments
+\usepackage[all]{xy}
+\usepackage{float}
+\usepackage{subfigure} 
+\usepackage{url}
+\usepackage{parskip}
+
+%% Elena's favorite green (thanks, Fernando!)
+\definecolor{ForestGreen}{RGB}{34,139,34}
+% Uncomment this if you want to show work-in-progress comments
+\newcommand{\comment}[1]{{\bf \tt  {#1}}}
+% Uncomment this if you don't want to show comments
+%\newcommand{\comment}[1]{}
+\newcommand{\emcomment}[1]{\textcolor{ForestGreen}{\comment{Elena: {#1}}}}
+\newcommand{\todo}[1]{\textcolor{blue}{\comment{To Do: {#1}}}}
+
+\begin{document}
+\pagestyle{plain}
+%
+% --- Author Metadata here ---
+%\conferenceinfo{WOODSTOCK}{'97 El Paso, Texas USA}
+%\setpagenumber{50}
+%\CopyrightYear{2002} % Allows default copyright year (2002) to be
+%over-ridden - IF NEED BE. 
+%\crdata{0-12345-67-8/90/01}  % Allows default copyright data
+%(X-XXXXX-XX-X/XX/XX) to be over-ridden. 
+% --- End of Author Metadata ---
+
+\title{Developing a Graphical Library for a Clojure-based Introductory CS Course}
+%\subtitle{[Extended Abstract \comment{DO WE NEED THIS?}]
+%\titlenote{}}
+%
+% You need the command \numberofauthors to handle the "boxing"
+% and alignment of the authors under the title, and to add
+% a section for authors number 4 through n.
+%
+% Up to the first three authors are aligned under the title;
+% use the \alignauthor commands below to handle those names
+% and affiliations. Add names, affiliations, addresses for
+% additional authors as the argument to \additionalauthors;
+% these will be set for you without further effort on your
+% part as the last section in the body of your article BEFORE
+% References or any Appendices.
+
+\author{
+Paul Schliep, Max Magnuson, and Elena Machkasova \\
+Computer Science Discipline \\
+University of Minnesota Morris\\
+Morris, MN 56267\\
+??, ??, elenam@umn.edu
+}
+
+\date{}
+
+\maketitle
+\thispagestyle{empty}
+
+\section*{\centering Abstract}
+UMM introductory CS curriculum emphasizes problem solving and general approaches to programming, such as modularity. Languages in the Lisp family, such as Racket, fit well with this emphasis. Currently, the language Racket is being used in an introductory course at UMM and has beneficial aspects for teaching functional approaches for CS design and a robust graphical library. However, Racket is primarily used as a teaching language and is not often used outside of the classroom setting. In contrast, Clojure, a novel language in the Lisp family, is used more often in real world settings and provides better parallel processing and integration with other languages. Therefore, using Clojure in an introductory class would be potentially more beneficial for students. The focus of our project is developing a graphical library in Clojure for introductory-level students. This is a part of a larger ongoing project to integrate Clojure into a college-level introductory CS course.
+
+Since functional languages focus on functions as programming units, provide abstraction, generalization, modularity, and give a better understanding of recursion (one of the key learning goals in an introductory CS course), we feel it is important that the graphical library used by students implements these functional approaches and is consistent with the functional programming in Clojure. In order to accomplish our goal, we want to create a graphical library that is similar to the one in Racket because it teaches introductory students problem solving skills and modularity with functional approaches in an engaging and entertaining setting. We are developing this library using the existing software package Quil, which is written in Clojure. However, Quil’s design is built upon Java Swing, so it focuses on sequences of commands that directly manipulate memory, which goes against the learning objectives of a class that focuses on functional approaches.
+
+We are developing a collection of functions similar to that of the Model-View Control of Racket’s graphical library on top of Quil’s existing library to address the learning objectives of functional programming and hide the imperative approaches currently in Quil. In this system students program using functions that take a state of the system (such as a position of a game character on a board) and return a new state (such as a new position and/or an image representing the character), without direct memory manipulation.
+
+We have designed and developed a collection of functions that abstract over Quil’s direct manipulation of the system’s state so that the state updates and displays using separate functions in a way that is geared toward introductory-level students. In this paper we present the main set of functions and examples of their usage. 
+\emcomment{As submitted to MICS; needs to be changed}
+
+
+\newpage
+\setcounter{page}{1}
+
+\section{Introduction}\label{sec:intro}
+
+
+%
+% The following two commands are all you need in the
+% initial runs of your .tex file to
+% produce the bibliography for the citations in your paper.
+%\bibliographystyle{abbrv}
+%\end{thebibliography}
+
+%\bibliography{generic_types}  
+% You must have a proper ".bib" file
+%  and remember to run:
+% latex bibtex latex latex
+% to resolve all references
+%
+% ACM needs 'a single self-contained file'!
+%
+\bibliographystyle{ACM}
+\bibliography{mics2014reducersBibliography}
+
+
+% That's all folks!
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

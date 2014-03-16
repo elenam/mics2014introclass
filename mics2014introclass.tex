@@ -49,9 +49,9 @@
 \usepackage{times} %For typeface
 \usepackage{epsfig}
 \usepackage{color} %For Comments
-\usepackage[all]{xy}
+%\usepackage[all]{xy}
 \usepackage{float}
-\usepackage{subfigure} 
+%\usepackage{subfigure} 
 \usepackage{url}
 \usepackage{parskip}
 
@@ -63,6 +63,8 @@
 %\newcommand{\comment}[1]{}
 \newcommand{\emcomment}[1]{\textcolor{ForestGreen}{\comment{Elena: {#1}}}}
 \newcommand{\todo}[1]{\textcolor{blue}{\comment{To Do: {#1}}}}
+
+\newcommand{\pscomment}[1]{\textcolor{red}{\comment{Paul: {#1}}}}
 
 \begin{document}
 \pagestyle{plain}
@@ -97,7 +99,7 @@ Paul Schliep, Max Magnuson, and Elena Machkasova \\
 Computer Science Discipline \\
 University of Minnesota Morris\\
 Morris, MN 56267\\
-??, ??, elenam@umn.edu
+??, schli202@umn.edu, elenam@umn.edu
 }
 
 \date{}
@@ -120,6 +122,34 @@ We have designed and developed a collection of functions that abstract over Quil
 \setcounter{page}{1}
 
 \section{Introduction}\label{sec:intro}
+\todo{Overview of project and goals, Paul's section}
+
+\section{Overview of Clojure}\label{sec:clojure}
+\todo{Max's section}
+
+\section{Goals and Setup for an Introductory Course}\label{sec:racket-clojure}
+
+\subsection{Overview of Current UMM CS Introductory Course}\label{subsec:course}
+\todo{Elena's subsection}
+
+\subsection{Plans for Introducing Clojure}\label{subsec:plans}
+\todo{Paul's section}
+
+\subsection{Requirements for a Graphical Library}\label{subsec:requirements}
+\todo{Talk about state and how to handle in a functional way, Max's section}
+
+\section{Developing a Clojure Graphical Library}\label{sec:library}
+
+\subsection{Overview of Quil}\label{subsec:quil}
+\todo{technical difficulties, imperative approaches, etc. Paul's section}
+
+\subsection{Introducing Functional Approaches}\label{subsec:functional}
+\todo{Max's section}
+
+\section{Examples of Usage of the Graphical Library}\label{sec:usage}
+\todo{Add examples as we are writing.  Make it into a section once we know what's in it.}
+
+\section{Conclusions and Future Work}\label{sec:future-work}
 
 
 %
@@ -138,7 +168,7 @@ We have designed and developed a collection of functions that abstract over Quil
 % ACM needs 'a single self-contained file'!
 %
 \bibliographystyle{ACM}
-\bibliography{mics2014reducersBibliography}
+\bibliography{mics2014introclassBibliography}
 
 
 % That's all folks!

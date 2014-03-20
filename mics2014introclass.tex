@@ -45,14 +45,6 @@
 \setlength{\textheight}{9in}
 \setlength{\parindent}{0in} 
 
-
-\usepackage{listings}
-\usepackage{color}
-
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-
 \usepackage{graphicx} %For jpg figure inclusion
 \usepackage{times} %For typeface
 \usepackage{epsfig}
@@ -144,7 +136,7 @@ We have designed and developed a collection of functions that abstract over Quil
 ~\cite{lein} \emcomment{Look into including URLs}
 
 \subsection{Plans for Introducing Clojure}\label{subsec:plans}
-%\todo{Paul's section}
+\todo{Paul's section}
 Clojure’s integration with Java and usefulness in the work field are just some of the perks that we feel can be beneficial to students in preparing for their future careers in computer science.  Although Clojure provides many important benefits not seen in Racket, it is not yet a language ready for using in an introductory CS course. In order to make it a usable language, many steps must be taken in order to accommodate for Clojure’s high learning curve that prevents it from being usable for beginner-level CS students.
 
 One barrier preventing Clojure from being used in an introductory CS course is its error messages. Often, they tend to be unintuitive and unnecessarily long and can be hard to understand for experienced programmers, much less beginning CS students. Also, there is not an environment that supports easy navigation of the error messages and connecting them to their location of the offending line of code (such as highlighting that line of code). Since problem solving is a core learning objective of the introductory course, it is essential for error messages to be usable for beginning students to enable them to easily troubleshoot issues and focus on key learning concepts. To solve these issues, we catch the error messages and throw more user-friendly messages appropriate for introductory CS students.  A graphical interface for displaying these transformed error messages in a development environment is also essential to help students on problem solving and learning key components to functional programming.  \emcomment{Here you aren't showing a graphical interface, so I would remove its mention.}
@@ -171,6 +163,13 @@ In order to teach many fundamentals of an introductory CS course, it is crucial 
 
 \subsection{Requirements for a Graphical Library}\label{subsec:requirements}
 \todo{Talk about state and how to handle in a functional way, Max's section}
+The goal was to find a graphical library in Clojure that would be appropriate for an introductory class that focuses on functional approaches and problem solving. Racket's graphical library has proven to be a powerful teaching tool in the current UMM CS introductory course by allowing students to make animations only a few weeks into the class. This maintains interest in programming while reinforcing key concepts. In our search for graphical libraries in Clojure we came across Quil. While promising, Quil had some issues that needed to be addressed before it could be used as a suitable graphical library for the introductory course.
+
+The design of Clojure Quil combines the processes of updating state and displaying state together into one. Quil uses functions to update state and display state in one process which requires direct memory manipulation. While their system works well, it is very imperative in its design which defeats the intent of teaching functional approaches. To address the issues of the imperative design we emulated the model-view-controller system of Racket's graphical library and modularized the process.
+
+Racket's graphical library works by separating state into three different processes using model-view-controller (MVC). The view is the actual visual representation of the graphics. The controller listens for changes. The model takes in the changes from the controller and updates the state for the view to then reflect the changes. This modularization of the work allows for the use of immutable objects to be passed around and used as opposed to direct memory manipulation.
+
+In our design of the graphical library we needed to separate the process of updating state and displaying state. In order to accomplish this we developed a system that would take in as arguments: a collection of graphic variables, a collection of functions to update state, and an ordered collection of functions used to display graphics. This design accomplishes both abstracting over direct memory manipulation and making order matter less. Our design abstracts over direct memory manipulation by taking care of changing variables for the user. When a part of the state is updated it is saved to a variable by the system not by the function that is provided by the user. Then when the graphics are displayed it accesses that variable and draws what is stored. This design makes order matter less by encapsulating updating state and displaying state. The order in which the state is updated is completely irrelevant and can happen independently of displaying state. Unfortunately displaying state requires order, but it is a necessity since issues of layering could come up if display wasn't ordered.
 
 \section{Developing a Clojure Graphical Library}\label{sec:library}
 
@@ -178,10 +177,10 @@ In order to teach many fundamentals of an introductory CS course, it is crucial 
 \todo{technical difficulties, imperative approaches, etc. Paul's section}
 
 \subsection{Introducing Functional Approaches}\label{subsec:functional}
-\todo{Max's section}
+\todo{Max's section}  
 
 \section{Examples of Usage of the Graphical Library}\label{sec:usage}
-\todo{Add examples as we are writing. Make it into a section once we know what's in it.}
+\todo{Add examples as we are writing.  Make it into a section once we know what's in it.}
 
 \section{Conclusions and Future Work}\label{sec:future-work}
 
@@ -202,7 +201,7 @@ In order to teach many fundamentals of an introductory CS course, it is crucial 
 % ACM needs 'a single self-contained file'!
 %
 \bibliographystyle{ACM}
-\bibliography{mics2014introclass}
+\bibliography{mics2014introclassBibliography}
 
 
 % That's all folks!

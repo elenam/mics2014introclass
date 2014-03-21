@@ -126,6 +126,14 @@ We have designed and developed a collection of functions that abstract over Quil
 
 \section{Overview of Clojure}\label{sec:clojure}
 \todo{Max's section}
+Clojure is a functional programming language developed by Rich Hickey and released in 2007. Clojure was developed with a strong emphasis on functional programming with its immutable data types and first class functions.
+\mmcomment{I'm not sure what else I should include in this overview. Immutable data types and first class functions seem important to explain for the rest of the paper, but I'm not sure what else. Maybe recursion?}
+
+Immutable data types are data types that cannot be changed. So in Clojure when a change to a data type is needed a new data type will be made with that new value. The use of immutable data types in Clojure gives it a significant advantage over imperative languages when it comes to parallel processing. Mutable data types in imperative languages can cause a variety of issues. Say the value one is stored and two functions running in parallel need to access that value, increment it, and then store the new value. The expected result should be three, but that will not always be true. If the two functions access the value while it is still one, increment it, then save it as the new value of two, the resulting value will be two instead of three. This situation is called a race condition. A race condition are inconsistencies that arise when the order in which parallel processes work can cause unintended results.
+\mmcomment{I don't think the above example is solvable with immutable data types. I need to come up with a better example. Also should I go explain persistent data types?}
+
+First class functions are functions that are able to be passed as arguments into other functions, returned from functions, or storing them in data structures.
+\mmcomment{I will come up with some example code to better illustrate this concept, and more explanation will go along with the example code.}   
 
 \section{Goals and Setup for an Introductory Course}\label{sec:racket-clojure}
 \emcomment{Section~\ref{subsec:plans} assumes that we have already talked about Clojure-Java integration and usefulness in the work filed. This may or may not belong here, but it has to be somewhere.}

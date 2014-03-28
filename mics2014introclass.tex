@@ -130,15 +130,22 @@ Racket has a full graphical API that is useful for students to create a wide arr
 
 \section{Overview of Clojure}\label{sec:clojure}
 \todo{Max's section}
-Clojure is a functional programming language in the Lisp \emcomment{usually only the first letter is capitalized} family of languages. Clojure was developed by Rich Hickey and released in 2007~\cite{Hickey:2008}. Clojure was developed with a strong emphasis on functional programming with its immutable data types and first class functions. Also Clojure provides a rich set of data structures that are immutable, such as lists, vectors, and hashmaps.
+Clojure is a functional programming language in the Lisp family of languages. Clojure was developed by Rich Hickey and released in 2007~\cite{Hickey:2008}. Clojure was developed with a strong emphasis on functional programming with its immutable data types and first class functions. Also Clojure provides a rich set of data structures that are immutable, such as lists, vectors, and hashmaps.
 \emcomment{We need to remind the reader about what functional and imperative is. Not here, but somewhere?}
+\mmcomment{I'm not quite sure. Currently we have the explanation of functional approaches near the end of the paper which would be the best spot to explain functional vs imperative, but for a lot of the following sections it requires differentiating between functional and imperative.}
 
 Immutable data types are data types that cannot be changed. In Clojure when a change to an item of data is needed, a new data item will be made with that new value. The use of immutable data types in Clojure gives it a significant advantage over imperative languages when it comes to parallel processing. Mutable data types in imperative languages can cause a variety of issues. For instance, if the value 1 is stored and two functions running in parallel need to access that value, increment it, and then store the new value. The expected result should be three, but that will not always be true. If the two functions access the value while it is still one, increment it, then save it as the new value of two, the resulting value will be two instead of three. This situation is called a race condition. A race condition are inconsistencies that arise when the order in which parallel processes work can cause unintended results.
 \mmcomment{I don't think the above example is solvable with immutable data types. I need to come up with a better example. Also should I explain persistent data types?}
 \emcomment{Good point. Perhaps think of an object with several fields that becomes inconsistent because parts of it are modified separately}
 
-First class functions are functions that are able to be passed as arguments into other functions, returned from functions, or storing them in data structures.
-\mmcomment{I will come up with some example code to better illustrate this concept, and more explanation will go along with the example code.}   
+First class functions are functions that are able to be passed as arguments into other functions, returned from functions, or stored in data structures.
+\begin{verbatim}
+	(def square-root[x] (* x x))
+	
+	(map square-root [1 2 3 4])
+	-> (1 4 9 16)
+\end{verbatim}
+Here the function square-root is defined which takes in a number as an argument and squares it. Then square-root is passed in as an argument to map which takes a function and a collection as arguments and applies the function to each item in the collection. Then the resulting collection is returned.   
 
 \section{Goals and Setup for an Introductory Course}\label{sec:racket-clojure}
 \emcomment{Section~\ref{subsec:plans} assumes that we have already talked about Clojure-Java integration and usefulness in the work filed. This may or may not belong here, but it has to be somewhere.}
@@ -172,21 +179,39 @@ However, there are limitations and potential issues to using this graphical libr
 \todo{Talk about state and how to handle in a functional way, Max's section}
 Racket's graphical library has proven to be a powerful teaching tool in the current UMM CS introductory course by allowing students to make their own animations less than a month into the semester without any prior programming background. This maintains interest in programming while reinforcing key concepts. With this in mind, we looked for a graphical library in Clojure that would be appropriate for an introductory class that focuses on functional approaches and problem solving. In our search for graphical libraries in Clojure we came across Quil. Quil is a developing graphical library written in Clojure that takes Clojure code and produces graphics using the Java Swing library. While promising, Quil had some issues that needed to be addressed before it could be used as a suitable graphical library for the introductory course.
 
-State \emcomment{Add a couple of sentences explaining what you mean by state; make it clear that it is different from a graphical representation. You might want to talk about MVC first.} in Quil contains all of the data to maintain and draw the graphics on screen. For example, a picture of a rocket would have certain properties that are needed to draw it such as position, size, color, and transparency \emcomment{This sentence, the way it's phrased, confuses the object and its graphical representation; rewrite}. Each of these properties are stored by the state and used to draw the rocket. The process of updating the state and drawing the state are completed using the same function. Since this process is combined, the order in which steps are taking is very important. Parts of the state need to be updated before drawing them, and those parts need to be drawn in the correct order in case the layering matters. If we needed to draw a wheel on a car that was moving across the screen, first the tire's properties would be updated then drawn then the rim's properties would be updated and drawn. This order would maintain the shape of the wheel because the tire would not be obscuring the rim and it requires multiple steps of updating state.While this system works well \emcomment{can accomplish needed tasks}, it is very imperative in its design which defeats the intent of teaching functional approaches. To address the issues of the imperative design we emulated the model-view-controller system of Racket's graphical library and modularized the process. 
+Model-view-controller (MVC) is a way of handling user interfaces. The model updates the collection of data used for displaying graphics. The view is the actual visual representation of the graphics. The view will listen for changes from the model and then reflect that visually. The controller listens for changes and then relays those changes to the model for updating. This modularization of the work allows greatly reduces the necessity for order of operations. If everything was updated piece by piece by taking in input, updating the data, then displaying it graphically, then the order of operations of the model, view, and control would all matter simultaneously. Since the process is broken up, the order of operations only matters with in each system. Model-view-controller is the system used by Racket's graphical library.
 
-\emcomment{Switch with the previous paragraph. I would introduce MVC first, and then say at the end of the paragraph that Racket uses MVC.}
-Racket's graphical library works by separating state \emcomment{I am not sure we should refer to all of this as state. To me, the model is the state.} into three different processes using model-view-controller (MVC). The view is the actual visual representation of the graphics. The controller listens for changes. The model takes in the changes from the controller and updates the state for the view to then reflect the changes. \emcomment{Define the model first, then view, then controller.} This modularization of the work allows for the use of immutable objects to be passed around and used as opposed to direct memory manipulation. \emcomment{Make this logical connection clearer: MVC by itself doesn't imply immutability}
+State in Quil is the collection of data related to each graphical object, not the graphical representation itself. Consider a picture of a rocket. The rocket object has certain properties such as position, size, and color. The state of the rocket would be the object that contains this data. The graphical representation of the rocket would use the data stored by state to know where to draw the rocket, how big to draw the rocket, and what color the rocket should be. If the rocket was moving through the air, the state would update the position and possibly the size of rocket. Then, the new rocket would be drawn after the updates are made. In Quil, the process of updating state and drawing the graphics are completed using the same function. Since this process is combined, the order in which steps are taken is very important, and certain processes start caring about other processes that are unrelated. Parts of the state need to be updated before drawing them, and those parts need to be drawn in the correct order in case the layering matters. In this case the order of operations of updating state and drawing the graphics matters at the same time as opposed to the MVC. If we needed to draw a wheel on a car that was moving across the screen, first the tire's properties would be updated then drawn. Then, the rim's properties would be updated and drawn. This order would maintain the shape of the wheel because the tire would not be obscuring the rim. In this example, the order of updating the rim cares about when the tire is drawn. These two processes shouldn't really care about when one or the other is performed. This unnecessarily complicates the process of drawing the wheel and is an inherent flaw in Quil's design from a functional approach. While Quil's system can accomplish needed tasks, it is very imperative in its design which defeats the intent of teaching functional approaches. To address the issues of the imperative design we emulated the model-view-controller system of Racket's graphical library and modularized the process.
 
 \emcomment{This probably should be its own subsection; make the transition clearer: this is the essence of what we are doing; perhaps needs to be later in the paper; need to think about it}
-In our design of the graphical library we needed to separate the processes of updating state and displaying state. In order to accomplish this we developed a system that would take in as setup: 
+\mmcomment{Yeah, this should probably go in the section Developing a Clojure Graphical Library. It seems like Paul and I both go into a bit of detail of our changes to Quil, and it might be better to have it in its own separate section probably after functional approaches.}
+In our design of the graphical library we needed to separate the processes of updating state and displaying state. In order to accomplish this we developed a system that would take in as setup:
 \begin{itemize}
-	\item A collection of graphics variables 
+	\item A collection of graphics variables
 	\item A collection of functions to update state
-	\item An ordered collection of functions used to display graphics 
+	\item An ordered collection of functions used to display graphics
 \end{itemize}
-\emcomment{You need to explain waaay more about how this works; use an example.}
-This design accomplishes both abstracting over direct memory manipulation and making order matter less. Our design abstracts over direct memory manipulation by taking care of changing variables for the user \emcomment{show an example of this; perhaps a diagram would be helpful}. When a part of the state is updated it is saved to a variable by the system not by the function that is provided by the user. Then when the graphics are displayed it accesses that variable and draws what is stored. This design makes order matter less by encapsulating updating state and displaying state \emcomment{Again, give an example (of ``before' and ``after'', i.e.. how it would've been done in Quil and how it is done now)}. The order in which the state is updated is completely irrelevant and can happen independently of displaying state. Unfortunately displaying state requires order, but it is a necessity since issues of layering could come up if display wasn't ordered.
-\emcomment{need an example}
+Example of user code in our graphical library design
+\begin{verbatim}
+(def states 
+	{:snake [450 450 450 470 450 490 450 510] :snakeHeadX 450 
+	:snakeHeadY 450 :foodX 150 :foodY 150 :snake-direction "north" 
+	:foodExists false :score 0}
+)
+(def updates
+	{:setup-drawing setup :update-snake update-snake}
+)
+(def display-order
+	[draw-snake draw-food redraw-canvas]
+)
+\end{verbatim}
+This code is for a game of snake. States is a hashmap with data that is required for drawing the graphical representation of the game. Updates is a hashmap containing functions that are designed by the user that will be used to update the state. Finally, display-order is a collection of functions designed by the user to draw the different parts of the game in order. The order being the first item in the collection will be the top layer, in this case the snake which will be drawn last, and the last item is the last layer, in this case being the background which will be drawn first.
+
+\includegraphics[width=300pt]{Handling_State_in_Graphical_Library}
+  
+This design accomplishes both abstracting over direct memory manipulation and making order of operations matter less. Our design abstracts over direct memory manipulation by taking care of changing variables for the user. When a part of the state is ready for updating our system will input the stored data as an argument into the update function then take the newly updated state and store that data. The accessing of the data and the storing of the data is all handled by the system and not by the user. When the graphics are displayed the data is accessed again by our system and given to the user made function to draw the graphics. 
+
+Our design makes order of operations matter less by encapsulating updating state and displaying state. In Quil, a single draw function is used to do everything. That draw function is supposed to update state and draw everything. This is a messy process that heavily relies on order of operations, and causes a lot of inter-dependencies that really should not be an issue. Updating is happening intermittently as drawing is happening, so updating of certain data can become dependent on displaying certain graphics that are inherently unrelated. We alleviate this issue by separating update and display into separate processes. All of the updating of state will be done prior to displaying a single graphic. Therefore, only the order in which the graphics are displayed will matter. This order cannot be removed entirely due to the nature of graphics. If a car wheel is being displayed, the tire would need to be drawn before the rim. Otherwise, the rim would be completely obscured by the tire.
 
 \section{Developing a Clojure Graphical Library}\label{sec:library}
 
@@ -215,9 +240,9 @@ In order to overcome the challenges of developing our desired functional system 
 
 \subsection{Introducing Functional Approaches}\label{subsec:functional}
 \todo{Max's section}
-Functional approaches to programming are stylistic choices that utilize the structure of functional programming. In designing our graphical library we focused on reducing the amount that order mattered 
-\emcomment{reducing dependency on the order of operations?}
-and limiting the need for the user to directly manipulate memory. These are two concepts that are common practice in functional programming.
+Functional approaches to programming are stylistic choices that utilize the structure of functional programming. In designing our graphical library we focused on reducing the dependency on order of operations and limiting the need for the user to directly manipulate memory. These are two concepts that are common practice in functional programming.
+
+In the functional approach
 
 \section{Examples of Usage of the Graphical Library}\label{sec:usage}
 \todo{Add examples as we are writing.  Make it into a section once we know what's in it.}

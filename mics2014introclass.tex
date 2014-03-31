@@ -129,7 +129,6 @@ Clojure is a functional programming language in the Lisp family of languages. Cl
 
 Immutable data types are data types that cannot be changed. In Clojure when a change to an item of data is needed, a new data item will be made with that new value. Immutable data types are useful for avoiding side effects in functions. A side effect is when a function directly manipulates memory or noticeably interacts outside of its own scope other than to return a value. So if a function would change a global variable then it would have a side effect. Side effects can make finding the cause of a problem in code more troublesome. If a function interacts with more than itself then the problem can be spread out through the rest of the program making it more difficult to fix. By reducing side effects, the problems will often be localized and easier to fix. 
 
-\emcomment{explain the syntax}
 Clojure's syntax is similar to other Lisp languages. It uses prefix notation. Which means, all functions take the form of
 \begin{verbatim}
 	([name of function] [argument 1] [argument 2] ...)

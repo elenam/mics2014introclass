@@ -130,15 +130,31 @@ Clojure is a functional programming language in the Lisp family of languages. Cl
 Immutable data types are data types that cannot be changed. In Clojure when a change to an item of data is needed, a new data item will be made with that new value. Immutable data types are useful for avoiding side effects in functions. A side effect is when a function directly manipulates memory or noticeably interacts outside of its own scope other than to return a value. So if a function would change a global variable then it would have a side effect. Side effects can make finding the cause of a problem in code more troublesome. If a function interacts with more than itself then the problem can be spread out through the rest of the program making it more difficult to fix. By reducing side effects, the problems will often be localized and easier to fix. 
 
 \emcomment{explain the syntax}
+Clojure's syntax is similar to other Lisp languages. It uses prefix notation. Which means, all functions take the form of
+\begin{verbatim}
+	([name of function] [argument 1] [argument 2] ...)
+\end{verbatim}
+This form even includes mathematical operations such as addition.
+\begin{verbatim}
+	(+ 2 2)
+	-> 4
+\end{verbatim}
+Clojure supports anonymous functions. This allows programmers to make functions on the fly when needed. Say we needed to make a function to square root a number.
+\begin{verbatim}
+	(fn [x] (* x x))
+\end{verbatim}
+Here the \texttt{fn} states that we have an anonymous function. Anything in the brackets following the \texttt{fn} are the arguments that the function takes. After that is the function itself which in this case is a simple multiplication of the argument to itself. If we wanted to be able to refer to this function later on in our code then we can use \texttt{def} to give it a name.
+\begin{verbatim}
+	(def square-root[x] (* x x))
+\end{verbatim}
+Now this function can be reused anywhere in the code.
 
 First class functions are functions that can be passed as arguments into other functions, returned from functions, or stored in data structures.
 \begin{verbatim}
-	(def square-root[x] (* x x))
-	
 	(map square-root [1 2 3 4])
 	-> (1 4 9 16)
 \end{verbatim}
-Here the function \texttt{square-root} is defined which takes in a number as an argument and squares it. Then \texttt{square-root} is passed in as an argument to map which takes a function and a collection as arguments and applies the function to each item in the collection. Then the resulting collection is returned.   
+Here \texttt{square-root} is passed in as an argument to map which takes a function and a collection as arguments and applies the function to each item in the collection. Then returns the resulting collection.   
 
 \section{Goals and Setup for an Introductory Course}\label{sec:racket-clojure}
 %\emcomment{Section~\ref{subsec:plans} assumes that we have already talked about Clojure-Java integration and usefulness in the work filed. This may or may not belong here, but it has to be somewhere.}

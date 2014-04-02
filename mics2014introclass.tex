@@ -214,39 +214,9 @@ State in Quil is the collection of data related to each object in the system, no
 
 \emcomment{This probably should be its own subsection; make the transition clearer: this is the essence of what we are doing; perhaps needs to be later in the paper; need to think about it}
 \mmcomment{Yeah, this should probably go in the section Developing a Clojure Graphical Library. It seems like Paul and I both go into a bit of detail of our changes to Quil, and it might be better to have it in its own separate section probably after functional approaches.}
-In our design of the graphical library we needed to separate the processes of updating state and displaying state. In order to accomplish this we developed a system that would take in as setup:
-\begin{itemize}
-	\item A collection of graphics variables
-	\item A collection of functions to update state
-	\item An ordered collection of functions used to display graphics
-\end{itemize}
-Example of user code in our graphical library design
-\begin{verbatim}
-(def states 
-	{:snake [450 450 450 470 450 490 450 510] :snakeHeadX 450 
-	:snakeHeadY 450 :foodX 150 :foodY 150 :snake-direction "north" 
-	:foodExists false :score 0}
-)
-(def updates
-	{:setup-drawing setup :update-snake update-snake}
-)
-(def display-order
-	[draw-snake draw-food redraw-canvas]
-)
-\end{verbatim}
-This code is for a game of snake. \texttt{States} is a hashmap with data that is required for drawing the graphical representation of the game. \texttt{Updates} is a hashmap containing functions that are designed by the user that will be used to update the state. Finally, \texttt{display-order} is a collection of functions designed by the user to draw the different parts of the game in order. The order being the first item in the collection will be the top layer, in this case the snake which will be drawn last, and the last item is the last layer, in this case being the background which will be drawn first.
 
-\begin{center}
-\includegraphics[width=300pt]{Handling_State_in_Graphical_Library}
-\end{center}
- 
-This design accomplishes both abstracting over direct memory manipulation and making order of operations matter less. Our design abstracts over direct memory manipulation by taking care of changing variables for the user. When a part of the state is ready for updating, our system will input the stored data as an argument into the update function, then take the newly updated state and store that data. The accessing of the data and the storing of the data is all handled by the system and not by the user. When the graphics are displayed the data is accessed again by our system and given to the user-made function to draw the graphics. 
-
-Our design makes order of operations matter less by encapsulating updating state and displaying state. In Quil, a single draw function is used to do everything. That draw function is supposed to update state and draw everything. This is a messy process that heavily relies on order of operations, and causes a lot of inter-dependencies that really should not be an issue. Updating is happening intermittently as drawing is happening, so updating of certain data can become dependent on displaying certain graphics that are inherently unrelated. We alleviate this issue by separating update and display into separate processes. All of the updating of state will be done prior to displaying a single graphic. Therefore, only the order in which the graphics are displayed will matter. This order cannot be removed entirely due to the nature of graphics. If a car wheel is being displayed, the tire would need to be drawn before the rim. Otherwise, the rim would be completely obscured by the tire.
 
 \section{Developing a Clojure Graphical Library}\label{sec:library}
-
-
 
 \subsection{Overview of Quil}\label{subsec:quil}
 %\todo{technical difficulties, imperative approaches, etc. Paul's section}
@@ -281,13 +251,69 @@ Functional approaches to programming reduce the dependency on order of operation
 
 The other concept we focused on is reducing the need for the user to directly manipulate memory. Functional approaches achieve this by using immutable data types and making functions free of side effects. A side effect in programming is when a function does something to interact with anything outside of that function with the exception of returning a value. If a function is called that accesses a field, changes it, and then returns a value, then the function would be considered to have a side effect. Immutable data types are perfect for solving this issue. A data type can be passed in to the function, a new version of it can be produced, and then returned. No interacting with global variables or fields. No changing its arguments. Directly manipulating memory is avoided entirely. Therefore, there will be no side effects. 
 
+
 \section{Examples of Usage of the Graphical Library}\label{sec:usage}
 \todo{Add examples as we are writing.  Make it into a section once we know what's in it.}
+\pscomment{Include differences between Our system and Racket's}
+
+In our design of the graphical library we needed to separate the processes of updating state and displaying state. In order to accomplish this we developed a system that would take in as setup:
+\begin{itemize}
+	\item A collection of graphics variables
+	\item A collection of functions to update state
+	\item An ordered collection of functions used to display graphics
+\end{itemize}
+
+Example of user code before we abstracted over Quil's functions
+\begin{verbatim}
+(defn draw []
+	(draw-food)
+	(draw-snake)
+	(update))
+
+(defn setup-scene []
+	(background-color "white")
+	(setup-state [:drawcoll [450 450 450 470 450 490 450 510] 
+	:snakeHeadX 450 :snakeHeadY 450 :foodX 150 :foodY 150 
+	:snake-direction "north" :foodExists false :score 0]))
+
+(defsketch snake 
+	:title "Hungry Hungry Snake"
+	:setup setup-scene
+	:draw draw 
+	:size [900 900])
+\end{verbatim}
+
+Example of user code in our graphical library design
+\begin{verbatim}
+(def states 
+	{:snake [450 450 450 470 450 490 450 510] :snakeHeadX 450 
+	:snakeHeadY 450 :foodX 150 :foodY 150 :snake-direction "north" 
+	:foodExists false :score 0})
+	
+(def updates
+	{:setup-drawing setup :update-snake update-snake})
+	
+(def display-order
+	[draw-snake draw-food redraw-canvas])
+\end{verbatim}
+This code is for a game of snake. The first example shows some user code from the original system before our version of the graphical library. In the first example, \texttt{draw} is a function that draws the food, then the starting position of the snake, and updates the snake where necessary based on user control of the keyboard.  The \texttt{setup-scene} function is used to setup the initial state of the game and background-color. The functions within \texttt{setup-state} contain the data required for drawing the snake and for updating its position and size when necessary. Finally, the \texttt{defsketch} calls all of the required functions from the program and creates the window size and window title. 
+
+The second example shows the user code from our graphical library. \texttt{States} is a hashmap with data that is required for drawing the graphical representation of the game. \texttt{Updates} is a hashmap containing functions that are designed by the user that will be used to update the state. Finally, \texttt{display-order} is a collection of functions designed by the user to draw the different parts of the game in order. The order being the first item in the collection will be the top layer, in this case the snake which will be drawn last, and the last item is the last layer, in this case being the background which will be drawn first.
+
+\begin{center}
+\includegraphics[width=300pt]{Handling_State_in_Graphical_Library}
+\end{center}
+ 
+This design accomplishes both abstracting over direct memory manipulation and making order of operations matter less. Our design abstracts over direct memory manipulation by taking care of changing variables for the user. When a part of the state is ready for updating, our system will input the stored data as an argument into the update function, then take the newly updated state and store that data. The accessing of the data and the storing of the data is all handled by the system and not by the user. When the graphics are displayed the data is accessed again by our system and given to the user-made function to draw the graphics. 
+
+Our design makes order of operations matter less by encapsulating updating state and displaying state. In Quil, a single draw function is used to do everything. That draw function is supposed to update state and draw everything. This is a messy process that heavily relies on order of operations, and causes a lot of inter-dependencies that really should not be an issue. Updating is happening intermittently as drawing is happening, so updating of certain data can become dependent on displaying certain graphics that are inherently unrelated. We alleviate this issue by separating update and display into separate processes. All of the updating of state will be done prior to displaying a single graphic. Therefore, only the order in which the graphics are displayed will matter. This order cannot be removed entirely due to the nature of graphics. If a car wheel is being displayed, the tire would need to be drawn before the rim. Otherwise, the rim would be completely obscured by the tire.
 
 \section{Conclusions and Future Work}\label{sec:future-work}
-We have successfully  abstracted over many of the functions and imperative approaches from Quil and have started to create a system that reflects the functional design of Clojure. With our system, students can easily create programs using functional approaches to produce graphical figures. This is made possible through our emulation of Racket’s model-view-controller system. \emcomment{This is not the way to say it}
-\emcomment{Also, we never mentioned how our system is different from Racket - need to find a place for it} 
-While our developed graphical library accomplishes many of our design goals, it still has some work left before it can be considered ready for an introductory CS course. We plan to abstract over the \texttt{defsketch} function with our own macro in order to make it work with our developed code for state. We also plan to write documentation for our developed functions and system as well as examples. We will continue to abstract over functions that we deem to be inaccessible to introductory CS students. %\emcomment{I would remove mention of tests: 1. one really should be writing tests first, 2. We will not be able to test the view or even the controller, only the state.}
+\pscomment{Mention that the examples from ~\ref{sec:usage} are functional and intuitive, explain what we've done, what we're still working on and what needs to happen (macros to auto-generate code).}
+We have successfully  abstracted over many of the functions and imperative approaches from Quil and have started to create a system that reflects the functional design of Clojure. As seen in the previous section, our example shows that our graphical library encourages a much more functional approaches to creating programs and implements similar styles to Racket's graphical library in comparison to the original usage with Quil. With our system, students can intuitively create programs using functional approaches to produce graphical figures. This is made possible by using approaches similar to Racket's model-view-controller system. We've also abstracted over several of Quil's functions such as making shapes and inserting text that helps create a more intuitive system and a graphical library that encourages programming with functional methods.%\emcomment{This is not the way to say it}
+%\emcomment{Also, we never mentioned how our system is different from Racket - need to find a place for it} 
+
+While our developed graphical library accomplishes many of our design goals, it still has some work left before it can be considered ready for an introductory CS course. We plan to abstract over the \texttt{defsketch} function with our own macro in order to make it work with our developed code for state. This macro should be able to also create a system where students won't need to worry about calling their functions using a \texttt{defsketch} and can simply open a new project and begin making programs for displaying their work. We also plan to write documentation for our developed functions as well as examples to ensure students won't have difficulties understanding functions. We will continue to abstract over functions that we deem to be inaccessible to introductory CS students as we continue to develop the system. %\emcomment{I would remove mention of tests: 1. one really should be writing tests first, 2. We will not be able to test the view or even the controller, only the state.}
 
 
 %

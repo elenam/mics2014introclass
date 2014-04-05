@@ -59,9 +59,9 @@
 %% Elena's favorite green (thanks, Fernando!)
 \definecolor{ForestGreen}{RGB}{34,139,34}
 % Uncomment this if you want to show work-in-progress comments
-\newcommand{\comment}[1]{{\bf \tt  {#1}}}
+%\newcommand{\comment}[1]{{\bf \tt  {#1}}}
 % Uncomment this if you don't want to show comments
-%\newcommand{\comment}[1]{}
+\newcommand{\comment}[1]{}
 \newcommand{\emcomment}[1]{\textcolor{ForestGreen}{\comment{Elena: {#1}}}}
 \newcommand{\todo}[1]{\textcolor{blue}{\comment{To Do: {#1}}}}
 
@@ -159,22 +159,15 @@ First class functions are functions that can be passed as arguments into other f
 	(map square-root [1 2 3 4])
 	-> [1 4 9 16]
 \end{verbatim}
-Here \texttt{square-root} is passed in as an argument to \texttt{map} which takes a function and a collection as arguments and applies the function to each item in the collection. It then returns the resulting collection.
+Here \texttt{square-root} is passed in as an argument to \texttt{map} which takes a function and a collection as arguments and applies the function to each item in the collection. It then returns the resulting collection \texttt{[1 4 9 16]}.
 
+Another important data structure in Clojure is hashmaps:
 \begin{verbatim}
-	{:a 1 :b 2 :c}
+	{:a 1 :b 2 :c 3}
 \end{verbatim}
-The above is an example of a hashmap in Clojure. A hashmap is series of key-value pairs. The keys in the hashmap are directly connected to a value. If a key is called on a hashmap the value that is connected to that key will be returned.
-\begin{verbatim}
-	(:b {:a 1 :b 2 :c})
-	-> 2
-\end{verbatim}
-This relation only goes in one direction. A value cannot be called on a hashmap and have a key returned. 
+A hashmap is collection of key-value pairs. The keys in the hashmap are directly connected to a value. Typically keywords are used as keys in hashmaps. Keywords are simply identifiers of the form \texttt{:a, :name, :student}. In the hashmap above the keyword :a is bound to the value 1, the keyword :b is bound to the value 2, etc. 
 
-Typically keywords are used as keys in hashmaps. Keywords are simply identifiers which take the form of
-\begin{verbatim}
-	:<name of keyword>
-\end{verbatim}
+
 
 \section{Goals and Setup for an Introductory Course}\label{sec:racket-clojure}
 %\emcomment{Section~\ref{subsec:plans} assumes that we have already talked about Clojure-Java integration and usefulness in the work filed. This may or may not belong here, but it has to be somewhere.}
@@ -231,7 +224,7 @@ The modularization of work implemented by the MVC greatly reduces the dependency
 
 State in Quil is a collection of data related to each object in the system, not the graphical representation itself. If we needed to draw a wheel on a car that was moving across the screen, the tire and the rim would have properties such as position and size that are needed for drawing the wheel. The state in this case would be the collection of position and size.
 
-Drawing in Quil mashes the process of updating state and drawing state into a single function. In the wheel on a car example, first the tire's position would be updated then drawn, and then the rim's position would be updated and drawn. Even in this small example, the process is very dependent on order of operations. Two operations that are not inherently dependent on each other, updating the tire and updating the rim, are now dependent on the order in which they happen. Preferably this situation would be avoided by separating updating state and displaying state similar to how it is handled in the MVC framework.
+Drawing in Quil mashes the process of updating state and drawing state into a single function. In the wheel on a car example, first the tire's position would be updated and drawn, and then the rim's position would be updated and drawn. Even in this small example, the process is very dependent on order of operations. Two operations that are not inherently dependent on each other, updating the tire and updating the rim, are now dependent on the order in which they happen. This situation would be avoided by separating updating state and displaying state similar to how it is handled in the MVC framework.
 
 \section{Developing a Clojure Graphical Library}\label{sec:library}
 
@@ -335,7 +328,7 @@ This code is for a game of snake. The first example shows a fragment of user cod
 
 The second example shows the user code from our graphical library. \texttt{States} is a hashmap with data that is required for drawing the graphical representation of the game. \texttt{Updates} is a hashmap containing a setup function that will be run once followed by functions that are designed by the user that will be used to update the state. Finally, \texttt{display-order} is a collection of functions designed by the user to draw the different parts of the game in order. That order is the order in which the items are drawn.
 
-Our system differs from Racket by how state is updated. In Racket the user takes in the entire state, and must break down the state before being able to update it or draw it and then reassemble it. In our system, each portion of the state is already broken up by the system and is then supplied to the user made functions at each stage of the MVC process. We expect our system to be easier for students since they won't have to deal with the added complexity of having to deal with breaking down the state and reassembling it. Also a side benefit to our system is that functions won't need to be provide for parts of the state that don't need to be updated. This way students won't even need to deal with moving around parts of the state that don't even need to be accessed.
+Our system differs from Racket by how state is updated. In Racket the user takes in the entire state, and must break down the state into individual components before being able to update it or draw it, and then reassemble it. In our system, each portion of the state is tagged by keywords that match the function that update them. It is then supplied to the user-made functions at each stage of the MVC process. That means if a game contains snake and food, the user will provide a pair of functions for updating the snake and the food and another pair of functions for drawing them. The user maintains control over what constitutes components of state. We expect our system to be easier for students since they would not have to deal with the added complexity of having to deal with breaking down the state and reassembling it. Also a side benefit to our system is that functions won't need to be provide for parts of the state that do not need to be updated. This way students would not need to deal with updating parts of the state that do not need to be accessed.
 
 \begin{center}
 \includegraphics[width=300pt]{Handling_State_in_Graphical_Library}

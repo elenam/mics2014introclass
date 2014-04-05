@@ -201,7 +201,7 @@ However, there are limitations and potential issues to using this graphical libr
 
 
 \subsection{Requirements for a Graphical Library}\label{subsec:requirements}
-\todo{Talk about state and how to handle in a functional way, Max's section}
+%\todo{Talk about state and how to handle in a functional way, Max's section}
 Racket's graphical library has proven to be a powerful teaching tool in the current UMM CS introductory course by allowing students to make their own animations less than a month into the semester without any prior programming background. This maintains interest in programming while reinforcing key concepts. Those key concepts are reinforced in part by the functional design of Racket's graphical library. It uses an implementation called model-view-controller(MVC).
 
 MVC is a way of handling user interfaces. The model contains the state of the system which is the collection of data used for displaying graphics. The model is also responsible for updating this collection of data. The view is the visual representation of the graphics. The view will listen for changes from the model and then reflect that visually. The controller listens for changes and then relays those changes to the model for updating. 

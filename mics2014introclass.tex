@@ -182,8 +182,14 @@ Typically keywords are used as keys in hashmaps. Keywords are simply identifiers
 %\pscomment{I added some of the clojure-java integration and usefulness in my section for plans on introducing Clojure.  It can still be added here, but wouldn't be necessary anymore.}
 
 \subsection{Overview of Current UMM CS Introductory Course}\label{subsec:course}
-\todo{Elena's subsection}
-~\cite{htdp}
+CSci 1301 {\it Problem Solving and Algorithms Development} is an introductory course for CS majors and minors. Students are not expected to have any background in computing prior to the course. The course focuses on algorithmic approaches to problem solving and implementing solutions in a programming language. For over 15 years the course has been utilizing a dialect of Lisp: first Scheme, and then a very similar dialect Racket that has been specifically developed for teaching~\cite{htdp}. Racket comes with a beginner-friendly development environment, DrRacket, which introduces students to the language level-by-level, making available more and more language capabilities as students move through the course. While both Scheme and Racket provide optional mutable data, the focus of the course is on functional approaches that do not utilize mutability. 
+
+The use of a functional language exposes students to concepts such as recursion by working with lists and abstraction by working with higher order functions and generalizing solutions to handle a wider and wider array of problems. For instance, students write a function to add 1 to each element in a list of integers, and then a function to convert each element of a list of strings to lower-case. After writing several functions that follow the same pattern of applying an operation to each element in a list, they arrive at a concept of {\tt map}: a higher-order function that takes a list and a function and applies the function to each element of that list. This type of generalization and abstraction is essential later in an algorithms course, in a course that introduces object-oriented design, and in many other areas of CS. 
+
+One of the important elements of the current CSci 1301 setup at UMM is open-ended assignments in which students design interactive graphical programs via Racket's library that allows manipulating and displaying the state of a game (the so-called ``world'') in a purely functional way. The set of predefined functions allows students to create simple animations as early as less than a month into a semester. Later in the semester students create a multi-object interactive game in which objects can be controlled by keyboard characters, such as arrow keys, or mouse clicks. The ease with which shapes and images can be incorporated into Racket adds to the entertainment factor of the game. The course emphasizes group work which prompts students to discuss approaches to their design and encourages them to improve their coding style. 
+
+%\todo{Elena's subsection}
+
 %~\cite{lein} %\emcomment{Look into including URLs}
 
 \subsection{Plans for Introducing Clojure}\label{subsec:plans}

@@ -1,6 +1,6 @@
 \beamer@endinputifotherversion {3.26pt}
 \beamer@sectionintoc {1}{Introduction to the Project}{3}{0}{1}
 \beamer@sectionintoc {2}{Goals and Setup for an Introductory Course}{6}{0}{2}
-\beamer@sectionintoc {3}{Developing a Clojure Graphical Library}{11}{0}{3}
-\beamer@sectionintoc {4}{Our Graphical Library}{15}{0}{4}
-\beamer@sectionintoc {5}{Conclusions and Future Work}{19}{0}{5}
+\beamer@sectionintoc {3}{Developing a Clojure Graphical Library}{10}{0}{3}
+\beamer@sectionintoc {4}{Our Graphical Library}{14}{0}{4}
+\beamer@sectionintoc {5}{Conclusions and Future Work}{18}{0}{5}

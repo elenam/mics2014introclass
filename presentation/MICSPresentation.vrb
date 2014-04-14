@@ -1,20 +1,13 @@
-\frametitle{Collections vs sequence abstraction (example)}
-Define a function to reverse a sequence, using {\tt reduce}  ({\tt fold}).
-
-Note: {\tt defn} = define function, {\tt fn} = anonymous function (lambda),  {\tt '()} = empty list, {\tt []} = empty vector.  %\joecomment{You may want to include some of these earlier - the list/vector syntax in particular will be confusing on the previous slide} \elenacomment{I will go over the list/vector syntax on the previous slide, this is just a reminder.}
-%%{\tiny
-%\joecomment{Think you're missing the ' before the () on the last example?}
+\frametitle{Developing Programs with Quil}
+\begin{itemize}
+\item Defsketch
+\item Works using frames and frame rate
+\item Supports input from keyboard and mouse
 \begin{verbatim}
-;; works because conj adds to the beginning of a list
-(defn my-reverse [coll]
-    (reduce (fn [c x] (conj c x))  '() coll))
-
-;; doesn't work because conj adds at the end of a vector
-(defn my-reverse [coll]
-    (reduce (fn [c x] (conj c x)) [] coll))
-
-;; abstract approach (works with a list or a vector)
-(defn my-reverse [coll]
-    (reduce (fn [c x] (add-first x c)) '() coll))
-\end{verbatim} %\joecomment{Think you're missing the ' before the () on the last example?}
-%%} %%% end tiny
+(defsketch example ;; Define a new sketch named example
+:title "Example" ;; Set the title of the sketch
+:setup setup ;; Specify the setup function
+:draw draw ;; Specify the draw function
+:size [400 300]) ;; Specify the size of the window
+\end{verbatim}
+\end{itemize}

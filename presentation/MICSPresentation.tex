@@ -3,7 +3,7 @@
 \usepackage{color}
 %\usepackage[all]{xy}
 
-\newcommand{\allcomments}[1]{{#1}}
+\newcommand{\comment}[1]{}
 \definecolor{ForestGreen}{RGB}{34,139,34}
 \newcommand{\emcomment}[1]{\textcolor{ForestGreen}{\comment{Elena: {#1}}}}
 \newcommand{\todo}[1]{\textcolor{blue}{\comment{To Do: {#1}}}}
@@ -23,15 +23,14 @@
 
 
 \begin{document}
-\title{Steps towards teaching the Clojure programming language in an introductory CS  class}
+\title{Developing a Graphical Library for a Clojure-based Introductory CS Course}
 \author{Elena Machkasova, Paul Schliep, Max Magnuson}
 \institute[UMM] % (optional, but mostly needed)
 {
  % \inst{1}%
   University of Minnesota, Morris
 }
-\date[April 25, 2014]  
-{Developing a Graphical Library for a Clojure-based Introductory CS Course 2014.}
+\date[April 25, 2014]
 
 \begin{frame}
   \titlepage
@@ -49,21 +48,43 @@
 \begin{frame}
 \frametitle{The Project}
 \begin{itemize}
-\item
+\item Graphical Library in Clojure
+\item 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Introduction to Clojure}
 \begin{itemize}
-\item
+\item Functional Programming Language in the Lisp family
+\item Developed by Rich Hickey in 2007
+\item Immutable Data Types and First Class Functions
+\item Data Structures Such as Lists, Vectors, Hashmaps
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Clojure Syntax}
 \begin{itemize}
-\item
+	\item Prefix Notation			
+	\begin{verbatim}
+		(<name of function> <argument 1> <argument 2> ...)
+		(+ 2 2)
+		-> 4
+	\end{verbatim}
+	\item Anonymous Functions
+	\begin{verbatim}
+		(fn [x] (* x x))
+	\end{verbatim}
+	\item Def
+	\begin{verbatim}
+		(def square-root[x] (* x x))
+	\end{verbatim}
+	\item First Class Functions
+	\begin{verbatim}
+		(map square-root [1 2 3 4])
+		-> [1 4 9 16]
+	\end{verbatim}
 \end{itemize}
 \end{frame}
 
@@ -72,36 +93,41 @@
 \begin{frame}
 \frametitle{UMM's Introductory CS Course}
 \begin{itemize}
-\item
+\item Students are not expected to have prior programming knowledge
+\item The course utilizes Racket to help teach key concepts
+\item Racket is a functional language similar to Clojure
+\item Functional languages help students learn concepts like recursion and problem solving
+\item The course makes use of Racket's graphical library 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Introduction to Functional Approaches}
 \begin{itemize}
-\item
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Introduction to Racket}
-\begin{itemize}
-\item
+\item Stylistic choice for programming
+\item Immutable data types
+\item Less dependency on order
+\item First Class Functions
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Limitations of Clojure}
 \begin{itemize}
-\item
+\item Unintuitive error messages
+\item Lacks a graphical library
+\item Lack of an IDE suitable for beginner CS students
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Requirements for a Graphical Library}
 \begin{itemize}
-\item
+\item Reinforce functional approaches from Clojure
+\item Implement MVC similar to Racket's graphical library
+\item Accessible to introductory students
 \end{itemize}
+\pscomment{Add graphic for MVC}
 \end{frame}
 
 \section{Developing a Clojure Graphical Library}
@@ -109,28 +135,58 @@
 \begin{frame}
 \frametitle{Overview of Quil}
 \begin{itemize}
-\item
+\item Open source graphical library for Clojure
+\item Provides functionality suitable for introductory-level projects
+\item Built on top of java swing
+\item Continuously being developed
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Developing Programs with Quil}
 \begin{itemize}
-\item
+\item Defsketch
+\item Works using frames and frame rate
+\item Draws in layers
+\item Supports input from keyboard and mouse
+\begin{verbatim}
+(defsketch example 
+:title "Example"
+:setup setup
+:draw draw
+:size [400 300])
+\end{verbatim}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Example of a Quil Program}
 \begin{itemize}
-\item
+\begin{verbatim}
+(defn setup []
+(frame-rate 1)
+(background 200))
+
+(defn draw []
+(ellipse
+(random (width))
+(random (height))
+100 100))
+\end{verbatim}
 \end{itemize}
+\todo{Add image for this example}
 \end{frame}
 
 \begin{frame}
 \frametitle{Issues with Quil}
 \begin{itemize}
-\item
+\item Imperative Approaches
+	\begin{itemize}
+		\item Dependencies on order
+		\item Often requires manipulation of state
+		\item Inconsistent with introductory course goals
+	\end{itemize}
+\item Underdocumented API
 \end{itemize}
 \end{frame}
 

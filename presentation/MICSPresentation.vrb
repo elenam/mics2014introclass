@@ -12,4 +12,4 @@
 (def display-order
 [draw-snake draw-food redraw-canvas])
 \end{verbatim}
-\todo{snake screenshot}
+%\todo{snake screenshot}

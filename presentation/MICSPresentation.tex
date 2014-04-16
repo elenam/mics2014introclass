@@ -28,14 +28,14 @@
 \author{Elena Machkasova, Paul Schliep, Max Magnuson}
 \institute[UMM] % (optional, but mostly needed)
 {
- % \inst{1}%
+  Midwest Instruction and Computing Symposium
+  
   University of Minnesota, Morris
 }
 \date{April 25, 2014}
 
 \begin{frame}
   \titlepage
-  \todo{Add MICS here as well}
 \end{frame}
 
 \begin{frame}
@@ -130,7 +130,10 @@
 \item Implement Model-view-controller (MVC) similar to Racket's graphical library
 \item Accessible to introductory students
 \end{itemize}
-\pscomment{Add graphic for MVC}
+\begin{center}
+\includegraphics[width=100pt]{MVC-Process}
+\end{center}
+%\pscomment{Add graphic for MVC}
 \end{frame}
 
 \section{Developing a Clojure graphical library}
@@ -164,7 +167,10 @@
 
 \begin{frame}[fragile]
 \frametitle{Example of a Quil program}
-\begin{verbatim}
+  \begin{columns}[T]
+    \begin{column}{.5\textwidth}
+      \begin{block}{Example Code:}
+        \begin{verbatim}
 (defn setup []
 (frame-rate 1)
 (background 200))
@@ -174,8 +180,19 @@
 (random (width))
 (random (height))
 100 100))
-\end{verbatim}
-\todo{Add image for this example}
+        \end{verbatim}
+      \end{block}
+    \end{column}
+
+    \begin{column}{.5\textwidth}
+      \begin{block}{Our Image}
+        \begin{center}
+        \includegraphics[width=150pt]{quil-example}
+        \end{center}
+      \end{block}
+    \end{column}
+  \end{columns}
+
 \end{frame}
 
 \begin{frame}
@@ -224,11 +241,22 @@
 
 \begin{frame}
 \frametitle{Differences from Racket's graphical library}
-\begin{itemize}
-\item Racket gives entire state to user
-\item Our system breaks state down for the user
-\end{itemize}
-\todo{2 side-by-side graphics}
+\begin{columns}[T]
+\begin{column}{.5\textwidth}
+\begin{block}{Racket gives entire state to user}
+\begin{center}
+\includegraphics[width=150pt]{Rackets_State_Diagram}
+\end{center}
+\end{block}
+\end{column}
+\begin{column}{.5\textwidth}
+\begin{block}{Our system breaks state down for the user}
+\begin{center}
+\includegraphics[width=150pt]{Handling_State_in_Graphical_Library}
+\end{center}
+\end{block}
+\end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame} [fragile]
@@ -246,7 +274,14 @@
 (def display-order
 [draw-snake draw-food redraw-canvas])
 \end{verbatim}
-\todo{snake screenshot}
+%\todo{snake screenshot}
+\end{frame}
+
+\begin{frame}
+\frametitle{Snake Example}
+\begin{center}
+\fbox{\includegraphics[width=200pt]{snake}}
+\end{center}
 \end{frame}
 
 

@@ -31,10 +31,11 @@
  % \inst{1}%
   University of Minnesota, Morris
 }
-\date[April 25, 2014]
+\date{April 25, 2014}
 
 \begin{frame}
   \titlepage
+  \todo{Add MICS here as well}
 \end{frame}
 
 \begin{frame}
@@ -44,13 +45,14 @@
 
 \end{frame}
 
-\section{Introduction to the Project}
+\section{Introduction to the project}
 
 \begin{frame}
 \frametitle{The Project}
 \begin{itemize}
-\item Graphical Library in Clojure
-\item 
+\item Contributing to an effort on adopting Clojure for an introductory course
+\item Objective is to develop a graphical library for Clojure
+\item We hope this graphical library can be useful for the introductory course
 \end{itemize}
 \end{frame}
 
@@ -89,26 +91,26 @@
 \end{itemize}
 \end{frame}
 
-\section{Goals and Setup for an Introductory Course}
+\section{Goals and setup for an introductory course}
 
 \begin{frame}
-\frametitle{UMM's Introductory CS Course}
+\frametitle{UMM's introductory CS course}
 \begin{itemize}
 \item Students are not expected to have prior programming knowledge
-\item The course utilizes Racket to help teach key concepts
+\item The course currently utilizes Racket to help teach key concepts
 \item Racket is a functional language similar to Clojure
-\item Functional languages help students learn concepts like recursion and problem solving
+\item Functional languages help students learn concepts like recursion and higher order functions
 \item The course makes use of Racket's graphical library 
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Introduction to Functional Approaches}
+\frametitle{Introduction to functional approaches}
 \begin{itemize}
 \item Stylistic choice for programming
 \item Immutable data types
 \item Less dependency on order
-\item First Class Functions
+\item First class functions
 \end{itemize}
 \end{frame}
 
@@ -122,16 +124,16 @@
 \end{frame}
 
 \begin{frame}
-\frametitle{Requirements for a Graphical Library}
+\frametitle{Requirements for a graphical library}
 \begin{itemize}
 \item Reinforce functional approaches from Clojure
-\item Implement Model-View-Controller (MVC) similar to Racket's graphical library
+\item Implement Model-view-controller (MVC) similar to Racket's graphical library
 \item Accessible to introductory students
 \end{itemize}
 \pscomment{Add graphic for MVC}
 \end{frame}
 
-\section{Developing a Clojure Graphical Library}
+\section{Developing a Clojure graphical library}
 
 \begin{frame}
 \frametitle{Overview of Quil}
@@ -144,7 +146,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Developing Programs with Quil}
+\frametitle{Developing programs with Quil}
 \begin{itemize}
 \item Defsketch
 \item Works using frames and frame rate
@@ -161,7 +163,7 @@
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Example of a Quil Program}
+\frametitle{Example of a Quil program}
 \begin{verbatim}
 (defn setup []
 (frame-rate 1)
@@ -179,20 +181,20 @@
 \begin{frame}
 \frametitle{Issues with Quil}
 \begin{itemize}
-\item Imperative Approaches
+\item Imperative approaches
 	\begin{itemize}
+		\item Often requires direct manipulation of state
 		\item Dependencies on order
-		\item Often requires manipulation of state
 		\item Inconsistent with introductory course goals
 	\end{itemize}
 \item Underdocumented API
 \end{itemize}
 \end{frame}
 
-\section{Our Graphical Library}
+\section{Our graphical library}
 
 \begin{frame}
-\frametitle{Development of the Graphical Library}
+\frametitle{Development of the graphical library}
 \begin{itemize}
 \item Abstracted over Quil's functions
 	\begin{itemize}
@@ -207,7 +209,7 @@
 
 
 \begin{frame}
-\frametitle{How Our Graphical Library Works}
+\frametitle{How our graphical library works}
 \begin{itemize}
 \item Separates handling of state
 	\begin{itemize}
@@ -215,13 +217,13 @@
 	\item update
 	\item display
 	\end{itemize}
-\item 
+\item \todo{Something should go here, Max will remember what it is}
 \end{itemize}
 \end{frame}
 
 
 \begin{frame}
-\frametitle{Differences From Racket's Graphical Library}
+\frametitle{Differences from Racket's graphical library}
 \begin{itemize}
 \item Racket gives entire state to user
 \item Our system breaks state down for the user
@@ -230,7 +232,7 @@
 \end{frame}
 
 \begin{frame} [fragile]
-\frametitle{An Example Made Using Our Graphical Library}
+\frametitle{An example made using our graphical library}
 \begin{verbatim}
 (def states
 {:snake [450 450 450 470 450 490 450 510] :snakeHeadX 450
@@ -253,20 +255,31 @@
 \begin{frame}
 \frametitle{Conclusions}
 \begin{itemize}
-\item
+\item Good start for abstracting over Quil's functions
+\item More functional approach
+\item Graphical library shows promise
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Future Work}
 \begin{itemize}
-\item
+\item Create our own macro to abstract over defsketch
+\item Abstract over more functions in Quil
+\item Develop an API with examples for students
 \end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Acknowledgments and selected references}
 Selected references:
+\begin{itemize}
+\item Quil https://github.com/quil/quil
+\item Filleisen, M., Findler, R. B., Flatt, M. and Krishnamurthi, S. How to design programs: an introduction to programming and computing. MIT Press, Cambridge, MA, USA 2001.
+\item Hickey, R. The clojure programming language. In Proceedings of the 2008 symposium on Dynamic languages(New York,NY,USA,2008),DLS'08,ACM,pp.1:1-1:1.
+\end{itemize}
+Acknowledgments:
+The authors would like to thank...
 \end{frame}
 
 

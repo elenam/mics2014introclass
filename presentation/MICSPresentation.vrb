@@ -1,13 +1,15 @@
-\frametitle{Developing Programs with Quil}
-\begin{itemize}
-\item Defsketch
-\item Works using frames and frame rate
-\item Supports input from keyboard and mouse
+\frametitle{An Example Made Using Our Graphical Library}
 \begin{verbatim}
-(defsketch example ;; Define a new sketch named example
-:title "Example" ;; Set the title of the sketch
-:setup setup ;; Specify the setup function
-:draw draw ;; Specify the draw function
-:size [400 300]) ;; Specify the size of the window
+(def states
+{:snake [450 450 450 470 450 490 450 510] :snakeHeadX 450
+:snakeHeadY 450 :foodX 150 :foodY 150
+:snake-direction "north"
+:foodExists false :score 0})
+
+(def updates
+{:setup-drawing setup :update-snake update-snake})
+
+(def display-order
+[draw-snake draw-food redraw-canvas])
 \end{verbatim}
-\end{itemize}
+\todo{snake screenshot}

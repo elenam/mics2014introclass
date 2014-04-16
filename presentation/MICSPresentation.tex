@@ -3,7 +3,8 @@
 \usepackage{color}
 %\usepackage[all]{xy}
 
-\newcommand{\comment}[1]{}
+%\newcommand{\comment}[1]{}
+\newcommand{\comment}[1]{{\bf \tt  {#1}}}
 \definecolor{ForestGreen}{RGB}{34,139,34}
 \newcommand{\emcomment}[1]{\textcolor{ForestGreen}{\comment{Elena: {#1}}}}
 \newcommand{\todo}[1]{\textcolor{blue}{\comment{To Do: {#1}}}}
@@ -124,7 +125,7 @@
 \frametitle{Requirements for a Graphical Library}
 \begin{itemize}
 \item Reinforce functional approaches from Clojure
-\item Implement MVC similar to Racket's graphical library
+\item Implement Model-View-Controller (MVC) similar to Racket's graphical library
 \item Accessible to introductory students
 \end{itemize}
 \pscomment{Add graphic for MVC}
@@ -159,9 +160,8 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Example of a Quil Program}
-\begin{itemize}
 \begin{verbatim}
 (defn setup []
 (frame-rate 1)
@@ -173,7 +173,6 @@
 (random (height))
 100 100))
 \end{verbatim}
-\end{itemize}
 \todo{Add image for this example}
 \end{frame}
 
@@ -195,7 +194,14 @@
 \begin{frame}
 \frametitle{Development of the Graphical Library}
 \begin{itemize}
-\item
+\item Abstracted over Quil's functions
+	\begin{itemize}
+	\item Defsketch
+	\item Shapes
+	\item Colors
+	\item Text
+	\end{itemize}
+\item Handling state in a functional approach
 \end{itemize}
 \end{frame}
 
@@ -203,7 +209,13 @@
 \begin{frame}
 \frametitle{How Our Graphical Library Works}
 \begin{itemize}
-\item
+\item Separates handling of state
+	\begin{itemize}
+	\item MVC
+	\item update
+	\item display
+	\end{itemize}
+\item 
 \end{itemize}
 \end{frame}
 
@@ -211,15 +223,28 @@
 \begin{frame}
 \frametitle{Differences From Racket's Graphical Library}
 \begin{itemize}
-\item
+\item Racket gives entire state to user
+\item Our system breaks state down for the user
 \end{itemize}
+\todo{2 side-by-side graphics}
 \end{frame}
 
-\begin{frame}
-\frametitle{Example of Graphical Library}
-\begin{itemize}
-\item
-\end{itemize}
+\begin{frame} [fragile]
+\frametitle{An Example Made Using Our Graphical Library}
+\begin{verbatim}
+(def states
+{:snake [450 450 450 470 450 490 450 510] :snakeHeadX 450
+:snakeHeadY 450 :foodX 150 :foodY 150 
+:snake-direction "north"
+:foodExists false :score 0})
+
+(def updates
+{:setup-drawing setup :update-snake update-snake})
+
+(def display-order
+[draw-snake draw-food redraw-canvas])
+\end{verbatim}
+\todo{snake screenshot}
 \end{frame}
 
 

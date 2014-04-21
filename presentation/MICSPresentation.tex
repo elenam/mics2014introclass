@@ -25,7 +25,7 @@
 
 \begin{document}
 \title{Developing a Graphical Library for a Clojure-based Introductory CS Course}
-\author{Elena Machkasova, Paul Schliep, Max Magnuson}
+\author{Paul Schliep, Max Magnuson, Elena Machkasova}
 \institute[UMM] % (optional, but mostly needed)
 {
   Midwest Instruction and Computing Symposium
@@ -59,39 +59,13 @@
 \begin{frame}
 \frametitle{Introduction to Clojure}
 \begin{itemize}
-\item Functional Programming Language in the Lisp family
 \item Developed by Rich Hickey in 2007
-\item Immutable Data Types and First Class Functions
-\item Data Structures Such as Lists, Vectors, Hashmaps
+\item Functional programming language in the Lisp family
+\item Runs on the JVM
+\item Immutable data types and first class functions
+\item Data structures such as lists, vectors, hashmaps
 \end{itemize}
 \end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Clojure Syntax}
-\begin{itemize}
-	\item Prefix Notation			
-	\begin{verbatim}
-		(<name of function> <argument 1> <argument 2> ...)
-		(+ 2 2)
-		-> 4
-	\end{verbatim}
-	\item Anonymous Functions
-	\begin{verbatim}
-		(fn [x] (* x x))
-	\end{verbatim}
-	\item Def
-	\begin{verbatim}
-		(def square-root[x] (* x x))
-	\end{verbatim}
-	\item First Class Functions
-	\begin{verbatim}
-		(map square-root [1 2 3 4])
-		-> [1 4 9 16]
-	\end{verbatim}
-\end{itemize}
-\end{frame}
-
-\section{Goals and setup for an introductory course}
 
 \begin{frame}
 \frametitle{UMM's introductory CS course}
@@ -105,21 +79,62 @@
 \end{frame}
 
 \begin{frame}
+\frametitle{Racket graphical library game example}
+\begin{center}
+\includegraphics[width=300pt]{racketGameExample}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Benefits and limitations of Clojure}
+Benefits:
+\begin{itemize}
+\item Gaining traction in the industry
+\item Offers better parallel processing
+\item Integration with Java
+\end{itemize}
+Limitations:
+\begin{itemize}
+\item Unintuitive error messages
+\item Lacks a graphical library
+\item Lack of an IDE suitable for beginner CS students
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Clojure Syntax}
+\begin{itemize}
+	\item Prefix notation			
+	\begin{verbatim}
+		(<name of function> <argument 1> <argument 2> ...)
+		(+ 2 2)
+		-> 4
+	\end{verbatim}
+	\item Defn
+	\begin{verbatim}
+		(defn square-root[x] (* x x))
+	\end{verbatim}
+	\item Anonymous functions
+	\begin{verbatim}
+		(fn [x] (* x x))
+	\end{verbatim}
+	\item First class functions
+	\begin{verbatim}
+		(map square-root [1 2 3 4])
+		-> [1 4 9 16]
+	\end{verbatim}
+\end{itemize}
+\end{frame}
+
+\section{Goals and setup for an introductory course}
+
+\begin{frame}
 \frametitle{Introduction to functional approaches}
 \begin{itemize}
 \item Stylistic choice for programming
 \item Immutable data types
 \item Less dependency on order
 \item First class functions
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Limitations of Clojure}
-\begin{itemize}
-\item Unintuitive error messages
-\item Lacks a graphical library
-\item Lack of an IDE suitable for beginner CS students
 \end{itemize}
 \end{frame}
 
@@ -143,7 +158,7 @@
 \begin{itemize}
 \item Open source graphical library for Clojure
 \item Provides functionality suitable for introductory-level projects
-\item Built on top of java swing
+\item Built on top of Java Swing
 \item Continuously being developed
 \end{itemize}
 \end{frame}
@@ -158,8 +173,8 @@
 \begin{verbatim}
 (defsketch example 
 :title "Example"
-:setup setup
-:draw draw
+:setup setup-example
+:draw draw-example
 :size [400 300])
 \end{verbatim}
 \end{itemize}
@@ -171,11 +186,11 @@
     \begin{column}{.5\textwidth}
       \begin{block}{Example Code:}
         \begin{verbatim}
-(defn setup []
+(defn setup-example []
 (frame-rate 1)
 (background 200))
 
-(defn draw []
+(defn draw-example []
 (ellipse
 (random (width))
 (random (height))
@@ -237,41 +252,22 @@
 \end{itemize}
 \end{frame}
 
-
-\begin{frame}
-\frametitle{Differences from Racket's graphical library}
-\begin{columns}[T]
-\begin{column}{.5\textwidth}
-\begin{block}{Racket gives entire state to user}
-\begin{center}
-\includegraphics[width=150pt]{Rackets_State_Diagram}
-\end{center}
-\end{block}
-\end{column}
-\begin{column}{.5\textwidth}
-\begin{block}{Our system breaks state down for the user}
-\begin{center}
-\includegraphics[width=150pt]{Handling_State_in_Graphical_Library}
-\end{center}
-\end{block}
-\end{column}
-\end{columns}
-\end{frame}
-
 \begin{frame} [fragile]
 \frametitle{An example made using our graphical library}
 \begin{verbatim}
 (def states
-{:snake [450 450 450 470 450 490 450 510] :snakeHeadX 450
-:snakeHeadY 450 :foodX 150 :foodY 150 
-:snake-direction "north"
-:foodExists false :score 0})
+{:snake [450 450 450 470 450 490 450 510] 
+:snake-head-X 450 :snake-head-Y 450 
+:food-X 150 :food-Y 150 
+:snake-direction "north" :score 0})
 
 (def updates
-{:setup-drawing setup :update-snake update-snake})
+{:setup-drawing setup 
+:update-snake update-snake
+:update-food update-food})
 
 (def display-order
-[draw-snake draw-food redraw-canvas])
+[redraw-canvas draw-food draw-snake])
 \end{verbatim}
 %\todo{snake screenshot}
 \end{frame}
@@ -283,8 +279,33 @@
 \end{center}
 \end{frame}
 
+\begin{frame}
+\frametitle{Diagram of handling state in our graphical library}
+\begin{columns}[T]
+\begin{column}{.95\textwidth}
+\begin{block}{Our system breaks state down for the user}
+\begin{center}
+\includegraphics[width=290pt]{Handling_State_in_Graphical_Library}
+\end{center}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
 
-\section{Conclusions and Future Work}
+\begin{frame}
+\frametitle{Differences in handling state in Racket}
+\begin{columns}[T]
+\begin{column}{.95\textwidth}
+\begin{block}{Racket gives entire state to user}
+\begin{center}
+\includegraphics[width=270pt]{Rackets_State_Diagram}
+\end{center}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Conclusions and future work}
 
 \begin{frame}
 \frametitle{Conclusions}
@@ -318,7 +339,7 @@ Selected references:
 \frametitle{Acknowledgements}
 The authors would like to thank
 \begin{itemize}
-\item Elena Machkasova
+\item Nick Skube and Niccolas Ricci
 \item Developers of Quil
 \item Friends and Family
 \end{itemize}

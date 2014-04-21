@@ -1,15 +1,17 @@
 \frametitle{An example made using our graphical library}
 \begin{verbatim}
 (def states
-{:snake [450 450 450 470 450 490 450 510] :snakeHeadX 450
-:snakeHeadY 450 :foodX 150 :foodY 150
-:snake-direction "north"
-:foodExists false :score 0})
+{:snake [450 450 450 470 450 490 450 510]
+:snake-head-X 450 :snake-head-Y 450
+:food-X 150 :food-Y 150
+:snake-direction "north" :score 0})
 
 (def updates
-{:setup-drawing setup :update-snake update-snake})
+{:setup-drawing setup
+:update-snake update-snake
+:update-food update-food})
 
 (def display-order
-[draw-snake draw-food redraw-canvas])
+[redraw-canvas draw-food draw-snake])
 \end{verbatim}
 %\todo{snake screenshot}

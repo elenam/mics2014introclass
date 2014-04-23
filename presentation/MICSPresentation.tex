@@ -112,7 +112,7 @@ Limitations:
 	\end{verbatim}
 	\item Defn
 	\begin{verbatim}
-		(defn square-root[x] (* x x))
+		(defn square[x] (* x x))
 	\end{verbatim}
 	\item Anonymous functions
 	\begin{verbatim}
@@ -120,7 +120,7 @@ Limitations:
 	\end{verbatim}
 	\item First class functions
 	\begin{verbatim}
-		(map square-root [1 2 3 4])
+		(map square [1 2 3 4])
 		-> [1 4 9 16]
 	\end{verbatim}
 \end{itemize}
@@ -280,12 +280,12 @@ Limitations:
 \end{frame}
 
 \begin{frame}
-\frametitle{Diagram of handling state in our graphical library}
+\frametitle{Differences in handling state in Racket}
 \begin{columns}[T]
 \begin{column}{.95\textwidth}
-\begin{block}{Our system breaks state down for the user}
+\begin{block}{Racket gives entire state to user}
 \begin{center}
-\includegraphics[width=290pt]{Handling_State_in_Graphical_Library}
+\includegraphics[width=270pt]{Rackets_State_Diagram}
 \end{center}
 \end{block}
 \end{column}
@@ -293,12 +293,12 @@ Limitations:
 \end{frame}
 
 \begin{frame}
-\frametitle{Differences in handling state in Racket}
+\frametitle{Diagram of handling state in our graphical library}
 \begin{columns}[T]
 \begin{column}{.95\textwidth}
-\begin{block}{Racket gives entire state to user}
+\begin{block}{Our system breaks state down for the user}
 \begin{center}
-\includegraphics[width=270pt]{Rackets_State_Diagram}
+\includegraphics[width=290pt]{Handling_State_in_Graphical_Library}
 \end{center}
 \end{block}
 \end{column}

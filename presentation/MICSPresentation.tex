@@ -50,7 +50,7 @@
 \begin{frame}
 \frametitle{The Project}
 \begin{itemize}
-\item Contributing to an effort on adopting Clojure for an introductory course
+\item Contributing to ClojureEd on adapting to Clojure for an introductory course
 \item Objective is to develop a graphical library for Clojure
 \item We hope this graphical library can be useful for the introductory course
 \end{itemize}
@@ -62,7 +62,7 @@
 \item Developed by Rich Hickey in 2007
 \item Functional programming language in the Lisp family
 \item Runs on the JVM
-\item Immutable data types and first class functions
+\item Immutable data structures and first class functions
 \item Data structures such as lists, vectors, hashmaps
 \end{itemize}
 \end{frame}
@@ -123,6 +123,10 @@ Limitations:
 		(map square [1 2 3 4])
 		-> [1 4 9 16]
 	\end{verbatim}
+	\item Hashmaps
+	\begin{verbatim}
+	 	{:a 1 :b 2 :c 3}
+	\end{verbatim}
 \end{itemize}
 \end{frame}
 
@@ -142,8 +146,11 @@ Limitations:
 \frametitle{Requirements for a graphical library}
 \begin{itemize}
 \item Reinforce functional approaches from Clojure
-\item Implement Model-view-controller (MVC) similar to Racket's graphical library
 \item Accessible to introductory students
+\item Implement Model-view-controller (MVC) similar to Racket's graphical library
+	\begin{itemize}
+	\item Checkers example
+	\end{itemize}
 \end{itemize}
 \begin{center}
 \includegraphics[width=100pt]{MVC-Process}
@@ -236,6 +243,9 @@ Limitations:
 	\item Text
 	\end{itemize}
 \item Handling state in a functional approach
+	\begin{itemize}
+		\item Models MVC
+	\end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -256,18 +266,18 @@ Limitations:
 \frametitle{An example made using our graphical library}
 \begin{verbatim}
 (def states
-{:snake [450 450 450 470 450 490 450 510] 
-:snake-head-X 450 :snake-head-Y 450 
-:food-X 150 :food-Y 150 
-:snake-direction "north" :score 0})
+{:snake [450 450 450 470 450 490 450 510], 
+:snake-head [450 450], 
+:food [150 150], 
+:snake-direction "north", :score 0})
 
 (def updates
 {:setup-drawing setup 
-:update-snake update-snake
-:update-food update-food})
+:snake update-snake
+:food update-food})
 
 (def display-order
-[redraw-canvas draw-food draw-snake])
+[draw-canvas draw-food draw-snake])
 \end{verbatim}
 %\todo{snake screenshot}
 \end{frame}
@@ -298,7 +308,7 @@ Limitations:
 \begin{column}{.95\textwidth}
 \begin{block}{Our system breaks state down for the user}
 \begin{center}
-\includegraphics[width=290pt]{Handling_State_in_Graphical_Library}
+\includegraphics[width=240pt]{Handling_State_in_Graphical_Library}
 \end{center}
 \end{block}
 \end{column}

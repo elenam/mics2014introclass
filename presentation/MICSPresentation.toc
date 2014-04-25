@@ -1,4 +1,4 @@
-\beamer@endinputifotherversion {3.26pt}
+\beamer@endinputifotherversion {3.07pt}
 \beamer@sectionintoc {1}{Introduction to the project}{3}{0}{1}
 \beamer@sectionintoc {2}{Goals and setup for an introductory course}{9}{0}{2}
 \beamer@sectionintoc {3}{Developing a Clojure graphical library}{11}{0}{3}
